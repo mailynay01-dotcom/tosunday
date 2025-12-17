@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>from jeng’s heart</title>
+
+<style>
+:root{
+  --lightpink:#ffb6c1;
+  --plum:#dda0dd;
+  --paper:#fffaf0;
+}
+
+/* พื้นหลัง */
+body{
+  margin:0;
+  font-family: 'Sarabun', sans-serif;
+  background: linear-gradient(135deg, var(--lightpink), #ffb6c1);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* การ์ดกระดาษ */
+.card{
+  background:var(--paper);
+  width:90%;
+  max-width:480px;
+  padding:40px 30px;
+  border-radius:16px;
+  box-shadow:0 12px 35px rgba(0,0,0,.35);
+  text-align:center;
+}
+
+/* ตัวอักษร */
+h1{
+  font-size:34px;
+  color:var(--lightpink);
+}
+
+h2{
+  font-size:26px;
+  color:var(--lightpink);
+}
+
+.text{
+  font-size:22px;
+  line-height:1.8;
+  white-space:pre-line;
+  min-height:120px;
+}
+
+/* ปุ่ม */
+button{
+  margin:10px;
+  padding:14px 24px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:var(--lightpink);
+  color:white;
+}
+
+button.alt{
+  background:var(--plum);
+  color:#333;
+}
+
+/* รูป */
+img{
+  width:100%;
+  border-radius:12px;
+  margin:20px 0;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+</style>
+</head>
+
+<body>
+<div class="card">
+  <div id="content"></div>
+</div>
+
+<script>
+const content = document.getElementById("content");
+
+/* 🔸 พิมพ์ช้ามาก */
+function typeText(text, callback){
+  content.innerHTML = `<div class="text"></div>`;
+  const box = document.querySelector(".text");
+  let i = 0;
+
+  const timer = setInterval(()=>{
+    box.textContent += text[i];
+    i++;
+    if(i >= text.length){
+      clearInterval(timer);
+      if(callback) setTimeout(callback, 1200);
+    }
+  }, 90); // <<< ความช้า (ยิ่งเลขมาก ยิ่งช้า)
+}
+
+/* หน้าแรก */
+function pageStart(){
+  content.innerHTML = `
+    <h1>from\n\njeng’s\n\nheart</h1>
+    <p style="font-size:20px;">ถึงอีหมูอ้วน</p>
+    <button onclick="pageRead()">อ่าน</button>
+    <button class="alt" onclick="pageNo()">ไม่อ่าน</button>
+  `;
+}
+
+/* ไม่อ่าน */
+function pageNo(){
+  typeText("ครับผมเบสเฟรนฟอเอเว่อ");
+}
+
+/* อ่าน */
+function pageRead(){
+  typeText(
+    "ไม่บอก\n\nอะล้อเล่น\n\nกูขอเม็ดเยอะนิดนึง",
+    beforeQuestion
+  );
+}
+
+function beforeQuestion(){
+  typeText(
+    "ตอบคำถามก่อนนะ\nแล้วจะบอก",
+    question1
+  );
+}
+
+/* คำถาม 1 */
+function question1(){
+  content.innerHTML = `
+    <h2>คิดว่าตัวเองเป็นหมูรึเปล่า</h2>
+    <button onclick="alert('อือฮึ อยากเป็นหมูที่หล่อที่สุดในใจมึงบ้าง'); question2()">ใช่ก็เหี้ยแล้วมึงสิหมู</button>
+    <button onclick="alert('เป็นหมูที่น่ารักที่สุดในชีวิตเจ๋งเลย'); question2()">เออกูนี่แหละหมู</button>
+  `;
+}
+
+/* คำถาม 2 (ล็อค) */
+function question2(){
+  content.innerHTML = `
+    <h2>คิดว่าเจ๋งแจ๋วชอบอะไรมากที่สุด ?</h2>
+    <button onclick="alert('เออก็ชอบแต่ยังไม่ถูกวะ')">เงิน</button>
+    <button onclick="alert('ยังไม่ใช่ที่สุด')">ของกิน</button>
+    <button onclick="alert('ชอบเล่นแต่ยัง เลือกใหม่ครับไอควาย')">เกม</button>
+    <button onclick="alert('ผิด กรากวะน้อง')">ข้าวฟรี</button>
+    <button onclick="alert('ไม่ถูกครับโง่')">น้องหมา</button>
+    <button onclick="afterLock()">ซันเดย์</button>
+  `;
+}
+
+function afterLock(){
+  typeText("เก่งวะ ถูกต้อง", questionFinal);
+}
+
+/* คำถามสุดท้าย */
+function questionFinal(){
+  content.innerHTML = `
+    <h2>คิดว่า กูถ่ายรูปมึงไว้เยอะปะ ?</h2>
+    <button onclick="showPhoto()">เยอะมั้ง คงมีแต่รูปเหี้ยๆ</button>
+    <button onclick="showPhoto()">ไม่หรอก ถ่ายเพื่อ</button>
+  `;
+}
+
+/* รูป */
+function showPhoto(){
+  content.innerHTML = `
+    <img src="img/vv.jpg">
+    <div class="text"></div>
+  `;
+
+  const t = "ก็ไม่ค่อยเยอะเท่าไหร่\nแต่สร้างเป็นอัลบั้มไว้แล้วนะ55";
+  const box = document.querySelector(".text");
+  let i = 0;
+
+  const timer = setInterval(()=>{
+    box.textContent += t[i];
+    i++;
+    if(i >= t.length){
+      clearInterval(timer);
+      setTimeout(letter, 1500);
+    }
+  }, 90);
+}
+
+/* จดหมาย */
+function letter(){
+  typeText(
+    "ถึงมึงจะไม่อยากรู้\nแต่ขอให้กูได้บอกนะว่า\n\nเจ๋งแจ๋วชอบซันเดย์",
+    askLove
+  );
+}
+
+/* ขอคบ */
+function askLove(){
+  content.innerHTML = `
+    <h2>ถ้าไม่ชอบเจ๋งให้ลืมทุกอย่าง<br>ที่ได้อ่านไป<br>ได้ไหมครับ</h2>
+    <button onclick="alert('ขอบคุณครับ กจะตัดใจ มึงยังมีกูเป็นเพื่อนเสมอ')">โอเค</button>
+    <button class="alt" onclick="alert('ด่าก็ได้แต่อย่าแรงนะ ไม่งั้นกูร้องไห้')">ขอออกความคิดเห็น</button>
+  `;
+}
+
+pageStart();
+</script>
+
+</body>
+</html>
